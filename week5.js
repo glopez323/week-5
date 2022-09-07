@@ -1,4 +1,4 @@
-class player {
+class Player {
     constructor(name, position) {
         this.name = name;
         this.position = position;
@@ -64,18 +64,18 @@ class Menu {
     showMainMenuOptions() {
         return prompt (`
             0) exit
-            1) creat new team
-            2) view team
-            3) delete team
-            4) display teams
+            1) create Taco
+            2) view Order
+            3) delete Order
+            4) display all Orders
         `);
     }
 
     showTeamMenuOptions(teamInfo) {
         return prompt(`
             0) back
-            1) create player
-            2) delete player
+            1) add salsa
+            2) delete salsa
             ---------------------
             ${teamInfo}
         `);
@@ -90,19 +90,19 @@ class Menu {
     }
 
     createTeam() {
-        let name = prompt('Enter name for new team:');
+        let name = prompt('Enter type of Taco:');
         this.teams.push(new Team(name));
     }
 
     viewTeam() {
-        let index = prompt('Enter the index of the team you wish to view:');
+        let index = prompt('Enter order number:');
         if (index > -1 && index < this.teams.length) {
             this.selectedTeam = this.teams[index];
-            let description = 'Team Name: ' + this.selectedTeam.name + '\n';
+            let description = 'Type of Taco: ' + this.selectedTeam.name + '\n';
             
             for (let i = 0; i < this.selectedTeam.players.length; i++) {
-                description += i +') ' + this.selectedTeam.players[i].name + ' - ' + this.selectedTeam.players[i.postition + '\n';
-            ]
+                description += i +') ' + this.selectedTeam.players[i].name + ' - ' + this.selectedTeam.players[i].postition + '\n';
+            
             }
             let selection = this.showTeamMenuOptions(description);
             switch (selection) {
@@ -112,6 +112,26 @@ class Menu {
                 case '2':
                     this.deletePlayer();
             }
+        }
+    }
+
+    deleteTeam() {
+        let index = prompt('Enter the number of the order you wish to delete:');
+        if (index > -1 && index < this.teams.length) {
+            this.teams.splice(index, 1);
+        }
+    }
+
+    createPlayer() {
+        let name = prompt('Enter Green or Red salsa:');
+        let position = prompt('Enter type of drink:');
+        this.selectedTeam.players.push(new Player(name, position));
+    }
+
+    deletePlayer() {
+        let index = prompt('Enter order you wish to delete:');
+        if (index > -1 && index < this.selectedTeam.players.length) {
+            this.selectedTeam.players.splice(index, 1);
         }
     }
 }
